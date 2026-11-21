@@ -1,0 +1,10 @@
+variable,etiqueta,unidad,fuente,calidad,nota
+tasa_politica,Tasa de política (cierre),%,Banco de la República - decisiones de la Junta Directiva,oficial,Tasa vigente al cierre de diciembre
+inflacion,Inflación anual (diciembre),%,DANE - IPC; comunicados BanRep,oficial,Variación anual del IPC a diciembre
+meta_inflacion,Meta de inflación,%,Banco de la República,oficial,Meta puntual 3 % (rango 2-4 %)
+tasa_real_neutral,Tasa real neutral,%,Supuesto del curso (Regla de Taylor simplificada),supuesto,BanRep estima un rango cercano a 1-2 %
+brecha_producto,Brecha del producto,% del PIB potencial,Estimación aproximada a partir de los IPoM de BanRep,aproximado,Reemplazar con el dato del tablero del curso
+crecimiento_pib,Crecimiento del PIB real,%,DANE - cuentas nacionales (revisadas),oficial,2023 revisado a 0.7 %; 2024 = 1.7 %
+trm_promedio,TRM promedio anual,COP por USD,Banco de la República - serie TRM,oficial,Promedio de los días del año
+trm_cierre,TRM de cierre,COP por USD,Banco de la República - serie TRM,oficial,Último dato de diciembre
+embi_pbs,Riesgo país (EMBI Colombia),puntos básicos,JP Morgan EMBI (aprox. cierre de año),aproximado,Reemplazar con el dato del tablero del curso

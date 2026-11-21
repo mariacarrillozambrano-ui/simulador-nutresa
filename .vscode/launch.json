@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "0 · App Python (Streamlit)",
+      "type": "debugpy", "request": "launch",
+      "module": "streamlit",
+      "args": ["run", "app/app.py"], "cwd": "${workspaceFolder}", "console": "integratedTerminal", "justMyCode": true
+    },
+    {
+      "name": "1 · Construir (datos → web + Excel)",
+      "type": "debugpy", "request": "launch",
+      "program": "${workspaceFolder}/scripts/construir.py",
+      "args": ["construir"], "cwd": "${workspaceFolder}", "console": "integratedTerminal"
+    },
+    {
+      "name": "2 · Abrir simulador (servidor local)",
+      "type": "debugpy", "request": "launch",
+      "program": "${workspaceFolder}/scripts/construir.py",
+      "args": ["servir"], "cwd": "${workspaceFolder}", "console": "integratedTerminal"
+    },
+    {
+      "name": "3 · Construir con el tablero del curso",
+      "type": "debugpy", "request": "launch",
+      "program": "${workspaceFolder}/scripts/construir.py",
+      "args": ["construir", "--tablero", "${input:rutaTablero}"], "cwd": "${workspaceFolder}", "console": "integratedTerminal"
+    },
+    {
+      "name": "4 · Escenario por consola (2022, tasa −3 pp)",
+      "type": "debugpy", "request": "launch",
+      "program": "${workspaceFolder}/scripts/construir.py",
+      "args": ["escenario", "--anio", "2022", "--tasa", "-3"], "cwd": "${workspaceFolder}", "console": "integratedTerminal"
+    }
+  ],
+  "inputs": [
+    { "id": "rutaTablero", "type": "promptString", "description": "Ruta del tablero (csv o xlsx)", "default": "datos/crudos/Tablero_Economico_Estilizado.xlsx" }
+  ]
+}

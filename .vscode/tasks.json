@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "Crear entorno virtual", "type": "shell",
+      "windows": { "command": "py -m venv .venv; .venv\\Scripts\\python -m pip install -r requirements.txt" },
+      "command": "python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt", "problemMatcher": [] },
+    { "label": "App Python (Streamlit)", "type": "shell", "command": "streamlit run app/app.py", "isBackground": true, "problemMatcher": [] },
+    { "label": "Construir", "type": "shell", "command": "python scripts/construir.py", "group": { "kind": "build", "isDefault": true }, "problemMatcher": [] },
+    { "label": "Servir simulador", "type": "shell", "command": "python scripts/construir.py servir", "isBackground": true, "problemMatcher": [] },
+    { "label": "Pruebas", "type": "shell", "command": "python -m pytest -q", "group": "test", "problemMatcher": [] }
+  ]
+}

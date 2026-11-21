@@ -1,0 +1,5 @@
+streamlit>=1.50   # app interactiva en Python (app/app.py)
+plotly>=5.20      # gráficos de la app
+pandas>=2.0
+openpyxl>=3.1     # leer el tablero en Excel y exportar la plantilla
+pytest>=8         # pruebas del modelo

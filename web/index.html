@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador macro-financiero · Caso Nutresa–Gilinski</title>
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<div class="viz-root">
+
+<header class="cabecera">
+  <div class="cabecera-texto">
+    <p class="sobretitulo">Unidad 3 · Entorno económico de las finanzas</p>
+    <h1>Simulador macro-financiero del caso Nutresa–Gilinski</h1>
+    <p class="bajada">Regla de Taylor, escenarios y teoría de juegos con el tablero de coyuntura 2021–2024.</p>
+  </div>
+  <div class="cabecera-meta">
+    <span id="sello" class="sello">Verificando modelo…</span>
+    <span id="origen" class="origen"></span>
+  </div>
+</header>
+
+<nav class="pasos" aria-label="Pasos del borrador de entorno">
+  <p class="pasos-titulo">Cómo construir el borrador de entorno</p>
+  <ol>
+    <li><button data-ir="tablero"><span>1</span>Elige las variables</button></li>
+    <li><button data-ir="tablero"><span>2</span>Describe lo que ocurrió</button></li>
+    <li><button data-ir="decisiones"><span>3</span>Relaciona con las decisiones</button></li>
+    <li><button data-ir="escenarios"><span>4</span>Construye dos escenarios</button></li>
+    <li><button data-ir="critica"><span>5</span>Identifica la variable crítica</button></li>
+  </ol>
+</nav>
+
+<nav class="pestanas" role="tablist">
+  <button role="tab" data-tab="tablero" aria-selected="true">Tablero 2021–2024</button>
+  <button role="tab" data-tab="taylor">Regla de Taylor</button>
+  <button role="tab" data-tab="escenarios">Escenarios</button>
+  <button role="tab" data-tab="decisiones">Decisiones y juegos</button>
+  <button role="tab" data-tab="critica">Variable crítica</button>
+  <button role="tab" data-tab="supuestos">Supuestos y datos</button>
+</nav>
+
+<main>
+
+<!-- ============ 1. TABLERO ============ -->
+<section id="tablero" class="panel activo" role="tabpanel">
+  <div class="intro">
+    <h2>Pasos 1 y 2 · Elige las variables y describe lo que ocurrió</h2>
+    <p>Marca entre tres y cuatro variables que creas que pesaron en las decisiones del caso. Cada gráfico muestra su evolución 2021–2024 con la fuente y la calidad del dato.</p>
+  </div>
+  <div id="selector-variables" class="chips-seleccion"></div>
+  <p id="aviso-variables" class="aviso"></p>
+  <div id="multiples" class="rejilla-graficos"></div>
+
+  <h3 class="sub">Línea de tiempo del caso</h3>
+  <p class="nota">Precio de cada OPA en dólares y su equivalente en pesos con la TRM promedio del año: la misma oferta "valía" distinto según la tasa de cambio.</p>
+  <div id="linea-tiempo" class="linea-tiempo"></div>
+</section>
+
+<!-- ============ 2. TAYLOR ============ -->
+<section id="taylor" class="panel" role="tabpanel" hidden>
+  <div class="intro">
+    <h2>Regla de Taylor <span class="pastilla">versión simplificada</span></h2>
+    <p>Pulsa «Ver el ejemplo» para llenar la fórmula paso a paso, carga un año del tablero o mueve los controles para probar otros valores.</p>
+  </div>
+
+  <div class="formula-caja">
+    <div class="formula">
+      <div class="termino t-tasa"><small>Tasa</small><b id="f-tasa">—</b></div><span class="op">=</span>
+      <div class="termino t1"><small>inflación</small><b id="f-inf">—</b></div><span class="op">+</span>
+      <div class="termino t2"><small>tasa real neutral</small><b id="f-neu">—</b></div><span class="op">+</span>
+      <div class="termino t3"><small>½ (inflación − meta)</small><b id="f-gap">—</b></div><span class="op">+</span>
+      <div class="termino t4"><small>½ (brecha del producto)</small><b id="f-bre">—</b></div>
+    </div>
+    <div class="formula-acciones">
+      <button id="btn-ejemplo" class="btn primario">▶ Ver el ejemplo</button>
+      <span class="btn-grupo" id="btn-anios"></span>
+      <span id="f-texto" class="formula-texto"></span>
+    </div>
+  </div>
+
+  <div class="dos-col">
+    <div class="tarjeta">
+      <h3>Prueba otros valores</h3>
+      <p class="nota">Cada control cambia un término de la fórmula; la barra muestra cuánto aporta cada uno.</p>
+      <div class="controles" id="controles-taylor"></div>
+      <details class="avanzado"><summary>Pesos de la regla (avanzado)</summary>
+        <div class="controles" id="controles-pesos"></div>
+      </details>
+    </div>
+    <div class="tarjeta">
+      <div class="kpi-fila">
+        <div class="kpi grande"><small>Tasa según Taylor</small><b id="t-resultado">—</b></div>
+        <div class="kpi"><small>Tasa real implícita</small><b id="t-real">—</b></div>
+      </div>
+      <div id="barra-taylor" class="barra-taylor"></div>
+      <div class="leyenda" id="leyenda-taylor"></div>
+      <p id="t-lectura" class="lectura"></p>
+    </div>
+  </div>
+
+  <div class="tarjeta">
+    <h3>¿Qué hizo el Banco de la República frente a lo que sugería la regla?</h3>
+    <p class="nota">Tasa de política observada al cierre de cada año vs. tasa implícita en la Regla de Taylor con los datos del tablero. La regla del curso usa la inflación observada; BanRep decide con inflación esperada, por eso las diferencias son una pista, no un error.</p>
+    <div class="leyenda"><span><i class="viz-sw serie-1"></i>Tasa BanRep (observada)</span><span><i class="viz-sw serie-2"></i>Regla de Taylor</span></div>
+    <div id="grafico-taylor-hist" class="grafico"></div>
+    <div id="tabla-taylor" class="tabla-scroll"></div>
+  </div>
+</section>
+
+<!-- ============ 3. ESCENARIOS ============ -->
+<section id="escenarios" class="panel" role="tabpanel" hidden>
+  <div class="intro">
+    <h2>Paso 4 · Construye dos escenarios alternativos</h2>
+    <p>Plantea cómo habría cambiado el panorama con un entorno distinto: uno <b>más favorable</b> (tasas bajas) y uno <b>más adverso</b> (prima de riesgo mayor). Ajusta los supuestos y la plantilla se diligencia sola.</p>
+  </div>
+  <div class="barra-herramientas">
+    <label>Año del caso <select id="esc-anio"></select></label>
+    <label>OPA de referencia <select id="esc-opa"></select></label>
+    <label class="interruptor"><input type="checkbox" id="esc-taylor"> La tasa de política la fija la Regla de Taylor</label>
+  </div>
+  <div class="dos-col">
+    <div class="tarjeta esc favorable"><h3>☀ Más favorable <small>supuestos</small></h3><div class="controles" id="ctrl-favorable"></div></div>
+    <div class="tarjeta esc adverso"><h3>☁ Más adverso <small>supuestos</small></h3><div class="controles" id="ctrl-adverso"></div></div>
+  </div>
+  <div class="tarjeta">
+    <div class="titulo-con-accion">
+      <h3>Plantilla de escenarios</h3>
+      <div><button id="btn-csv" class="btn">Descargar CSV</button> <button id="btn-copiar" class="btn">Copiar tabla</button></div>
+    </div>
+    <p class="leyenda-plantilla"><span class="chip dato">Dato del tablero</span><span class="chip supuesto">Supuesto</span><span class="chip efecto">Resultado del modelo</span><span class="chip analisis">Tu análisis</span></p>
+    <div id="plantilla" class="tabla-scroll"></div>
+  </div>
+</section>
+
+<!-- ============ 4. DECISIONES ============ -->
+<section id="decisiones" class="panel" role="tabpanel" hidden>
+  <div class="intro">
+    <h2>Paso 3 · Relaciona con las decisiones</h2>
+    <p>Cómo el entorno movió el <b>costo de financiación</b>, la <b>valoración de la empresa</b> y los <b>incentivos de cada participante</b>, y qué predice la <b>teoría de juegos</b> sobre la interacción Gilinski–GEA.</p>
+  </div>
+  <div class="barra-herramientas">
+    <span class="btn-grupo" id="dec-escenario"></span>
+    <span class="nota" id="dec-contexto"></span>
+  </div>
+
+  <div class="cadena" id="cadena"></div>
+
+  <div class="dos-col">
+    <div class="tarjeta">
+      <h3>Matriz de pagos <small>(Gilinski/IHC, GEA) · miles de COP por acción</small></h3>
+      <div id="matriz"></div>
+      <p id="lectura-juego" class="lectura"></p>
+    </div>
+    <div class="tarjeta">
+      <h3>Zona de acuerdo</h3>
+      <p class="nota">Precio mínimo que aceptaría el GEA vs. precio máximo que puede pagar el oferente. Si no se cruzan, el resultado es el bloqueo, como pasó con las OPA de 2021–2022.</p>
+      <div id="zona" class="grafico"></div>
+      <p id="lectura-zona" class="lectura"></p>
+    </div>
+  </div>
+
+  <div class="tarjeta">
+    <h3>Incentivos de cada participante</h3>
+    <div class="rejilla-actores" id="actores"></div>
+    <details class="avanzado" open><summary>Supuestos del juego</summary>
+      <div class="controles cuatro" id="controles-juego"></div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ 5. VARIABLE CRÍTICA ============ -->
+<section id="critica" class="panel" role="tabpanel" hidden>
+  <div class="intro">
+    <h2>Paso 5 · Identifica la variable crítica</h2>
+    <p>Cada variable se mueve ±1 desviación estándar de lo observado en 2021–2024 (un choque de tamaño "histórico"), dejando todo lo demás igual. La que más mueve la valoración y la decisión es candidata a variable crítica.</p>
+  </div>
+  <div class="barra-herramientas">
+    <label>Año <select id="crit-anio"></select></label>
+  </div>
+  <div class="dos-col">
+    <div class="tarjeta">
+      <h3>Efecto en el valor por acción</h3>
+      <div class="leyenda"><span><i class="viz-sw serie-1"></i>Variable sube</span><span><i class="viz-sw serie-2"></i>Variable baja</span></div>
+      <div id="tornado-valor" class="grafico"></div>
+    </div>
+    <div class="tarjeta">
+      <h3>Efecto en la prima de la OPA frente al valor</h3>
+      <div class="leyenda"><span><i class="viz-sw serie-1"></i>Variable sube</span><span><i class="viz-sw serie-2"></i>Variable baja</span></div>
+      <div id="tornado-opa" class="grafico"></div>
+    </div>
+  </div>
+  <div class="tarjeta conclusion">
+    <h3>Lectura del modelo</h3>
+    <div id="conclusion"></div>
+    <p class="nota">Esto es evidencia para tu argumento, no la conclusión: en el borrador explica por qué, en tu opinión, esa variable condicionó las decisiones (costo de financiar la OPA, valor percibido, poder de negociación).</p>
+  </div>
+</section>
+
+<!-- ============ 6. SUPUESTOS ============ -->
+<section id="supuestos" class="panel" role="tabpanel" hidden>
+  <div class="intro">
+    <h2>Supuestos y datos</h2>
+    <p>Puedes editar los datos del tablero y los supuestos del modelo; todo se recalcula. Para cambios permanentes, edita <code>datos/macro_colombia.csv</code> y <code>src/nutresa_sim/config.py</code> y ejecuta <code>python scripts/construir.py</code>.</p>
+  </div>
+  <div class="tarjeta">
+    <div class="titulo-con-accion"><h3>Tablero de coyuntura (editable)</h3><button id="btn-restaurar" class="btn">Restaurar datos y supuestos</button></div>
+    <div id="tabla-macro" class="tabla-scroll"></div>
+  </div>
+  <div class="tarjeta">
+    <h3>Supuestos del modelo</h3>
+    <div id="tabla-param" class="rejilla-param"></div>
+  </div>
+  <div class="tarjeta">
+    <h3>Fuentes y calidad del dato</h3>
+    <div id="tabla-fuentes" class="tabla-scroll"></div>
+  </div>
+</section>
+
+</main>
+<footer class="pie">Modelo pedagógico: los niveles dependen de los supuestos; lo importante es la dirección y el tamaño relativo de los cambios entre escenarios. Verifica las cifras marcadas como «aproximado» o «verificar» con el tablero del curso.</footer>
+</div>
+
+<script src="data/datos.js"></script>
+<script src="js/graficos.js"></script>
+<script src="js/modelo.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

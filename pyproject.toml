@@ -1,0 +1,10 @@
+[project]
+name = "nutresa-sim"
+version = "1.0.0"
+description = "Simulador macro-financiero del caso Nutresa–Gilinski (Regla de Taylor, escenarios, teoría de juegos)"
+requires-python = ">=3.10"
+dependencies = ["openpyxl>=3.1", "pandas>=2.0", "plotly>=5.20", "streamlit>=1.50"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
